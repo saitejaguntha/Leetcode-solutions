@@ -1,22 +1,29 @@
 class Solution {
 public:
-    int achievemincost( vector<int>& cost , int index, vector<int>& optimizer ) {
+    // int achievemincost( vector<int>& cost , int index, vector<int>& optimizer ) {
 
-        if( index >= cost.size() ) {
-            return 0;
-        } 
+    //     if( index >= cost.size() ) {
+    //         return 0;
+    //     } 
 
-        if ( optimizer[index] == -1 ) {
-            optimizer[index] = cost[index] + min ( achievemincost(cost, index+1 , optimizer ) , 
-                                    achievemincost(cost, index+2 , optimizer ) ) ;
-        }
+    //     if ( optimizer[index] == -1 ) {
+    //         optimizer[index] = cost[index] + min ( achievemincost(cost, index+1 , optimizer ) , 
+    //                                 achievemincost(cost, index+2 , optimizer ) ) ;
+    //     }
 
-        return optimizer[index] ;
-    }
+    //     return optimizer[index] ;
+    // }
     int minCostClimbingStairs(vector<int>& cost) {
-
-        vector<int> optimizer (cost.size(),-1) ;
-
-        return min ( achievemincost( cost ,  0 , optimizer ), achievemincost( cost , 1 , optimizer ) ) ;
+        int n = cost.size() ;
+        int ans = 0 ;
+        // vector<int> optimizer (n,-1) ;
+        int  optimizer1 = cost[n-1] , optimizer2 = cost[n-2] ;
+        for ( int i = n-3 ; i >=0 ; i-- ) {
+            ans = cost[i] + min ( optimizer1 ,optimizer2 ) ;
+            optimizer1 = optimizer2 ;
+            optimizer2 = ans ;
+        }
+        return min ( optimizer1, optimizer2 ) ;
+        // /return min ( achievemincost( cost ,  0 , optimizer ), achievemincost( cost , 1 , optimizer ) ) ;
     }
 };
